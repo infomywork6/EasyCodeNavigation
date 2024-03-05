@@ -4,12 +4,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.prashant.easycodenavigation.ui.theme.BottomNavItem
 import com.prashant.easycodenavigation.ui.theme.EasyCodeNavigationTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    // Make UI component here
                 }
             }
         }
@@ -30,17 +39,40 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun BottomNavigationBar(navController: NavController) {
+    val items =
+        listOf(
+            BottomNavItem.Home,
+            BottomNavItem.Search,
+            BottomNavItem.Profile
+        )
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    EasyCodeNavigationTheme {
-        Greeting("Android")
+    BottomNavigation {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+
+        items.forEach { item ->
+            BottomNavigationItem(
+                selected = currentRoute == item.route,
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
+                },
+                icon = { Icon(item.icon, contentDescription = null) },
+                label = { Text(item.label) }
+            )
+        }
     }
 }
+
+@Composable
+fun NavigationHost(navController: NavHostController) {
+    NavHost(navController, startDestination = BottomNavItem.Home.route) {
+        composable(BottomNavItem.Home.route) { /* Home Screen UI */ }
+        composable(BottomNavItem.Search.route) { /* Search Screen UI */ }
+        composable(BottomNavItem.Profile.route) { /* Profile Screen UI */ }
+    }
+}
+
