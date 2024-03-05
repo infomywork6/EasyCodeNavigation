@@ -3,11 +3,13 @@ package com.prashant.easycodenavigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.prashant.easycodenavigation.ui.theme.BottomNavItem
 import com.prashant.easycodenavigation.ui.theme.EasyCodeNavigationTheme
 
@@ -27,11 +30,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             EasyCodeNavigationTheme {
                 // A surface container using the 'background' color from the theme
+                val navController = rememberNavController()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     // Make UI component here
+                    Scaffold(
+                        bottomBar = { BottomNavigationBar(navController) }
+                    ) { innerPad ->
+                        NavigationHost(navController = navController, innerPad)
+                    }
                 }
             }
         }
@@ -68,7 +77,7 @@ fun BottomNavigationBar(navController: NavController) {
 }
 
 @Composable
-fun NavigationHost(navController: NavHostController) {
+fun NavigationHost(navController: NavHostController, innerPad: PaddingValues) {
     NavHost(navController, startDestination = BottomNavItem.Home.route) {
         composable(BottomNavItem.Home.route) { /* Home Screen UI */ }
         composable(BottomNavItem.Search.route) { /* Search Screen UI */ }
