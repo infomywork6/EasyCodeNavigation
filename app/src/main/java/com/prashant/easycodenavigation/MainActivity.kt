@@ -3,8 +3,10 @@ package com.prashant.easycodenavigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -14,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -78,10 +81,34 @@ fun BottomNavigationBar(navController: NavController) {
 
 @Composable
 fun NavigationHost(navController: NavHostController, innerPad: PaddingValues) {
-    NavHost(navController, startDestination = BottomNavItem.Home.route) {
-        composable(BottomNavItem.Home.route) { /* Home Screen UI */ }
-        composable(BottomNavItem.Search.route) { /* Search Screen UI */ }
-        composable(BottomNavItem.Profile.route) { /* Profile Screen UI */ }
+    NavHost(
+        navController,
+        startDestination = BottomNavItem.Home.route,
+        modifier = Modifier.padding(innerPad)
+    ) {
+        composable(BottomNavItem.Home.route) { Home() }
+        composable(BottomNavItem.Search.route) { Search() }
+        composable(BottomNavItem.Profile.route) { Profile() }
     }
 }
 
+@Composable
+fun Home() {
+    Box(contentAlignment = Alignment.Center) {
+        Text(text = "This is Home screen")
+    }
+}
+
+@Composable
+fun Search() {
+    Box(contentAlignment = Alignment.Center) {
+        Text(text = "This is Search screen")
+    }
+}
+
+@Composable
+fun Profile() {
+    Box(contentAlignment = Alignment.Center) {
+        Text(text = "This is Profile screen")
+    }
+}
