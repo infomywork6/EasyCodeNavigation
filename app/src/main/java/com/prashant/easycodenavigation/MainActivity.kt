@@ -84,7 +84,9 @@ fun NavigationHost(navController: NavHostController, innerPad: PaddingValues) {
     NavHost(
         navController,
         startDestination = BottomNavItem.Home.route,
-        modifier = Modifier.padding(innerPad)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPad)
     ) {
         composable(BottomNavItem.Home.route) { Home() }
         composable(BottomNavItem.Search.route) { Search() }
