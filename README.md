@@ -1,4 +1,4 @@
-# Android : Bottom Navigation (Jetpack Compose)
+# Android Studio | Bottom Navigation | Jetpack Compose | Bottom Bar Navigation
 
 Implement bottom navigation bar in android app with jetpack compose
 
