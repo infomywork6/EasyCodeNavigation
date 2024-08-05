@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MVI-Demo"
+rootProject.name = "EasyCode Navigation"
 include(":app")

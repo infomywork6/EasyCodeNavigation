@@ -1,4 +1,4 @@
-package com.prashant.mvidemo.ui.theme
+package com.prashant.easycodenavigation.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.prashant.mvidemo
+package com.prashant.easycodenavigation
 
 import org.junit.Test
 
